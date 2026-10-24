@@ -6,9 +6,9 @@
 
 ## Technology
 
-- **Mesa 3.5.1** with Solara (`pip install -r requirements.txt`). Mesa 3.5 requires Python >=3.12. `.python-version` pins 3.12.
+- **Mesa 3.5.1** with Solara (`pip install -r requirements.txt`). Mesa 3.5 requires Python >=3.12.
 - Backend: **matplotlib** via `SpaceRenderer`.
-- Launch: `solara run app.py` → open the local URL in a browser. The public showcase is the Render web service in `render.yaml`.
+- Launch: `./setup.sh`, or `solara run app.py` inside `.venv`. Open the local URL in a browser. The website links to this repository. Viewers see the run in a stream or a recording.
 - Model constructor must accept **keyword-only arguments** (`ModelCreator` checks this).
 
 ## Layout

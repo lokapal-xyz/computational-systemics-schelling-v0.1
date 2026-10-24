@@ -26,8 +26,8 @@ v0.1 is already implemented. Extend these files. Do not add a second model packa
 - `schelling_status/` — the model. `status.py` (`StatusEntry`), `agent.py` (`SchellingAgent`), `model.py` (`SchellingModel`).
 - `run.py` — CLI step log. Defaults: 50×50, vacancy 0.15, two equal groups, permeability 0.4, 150 steps, seed 1. The step cap is enforced here, not inside `SchellingModel.step()`.
 - `app.py` — Solara dashboard. Defaults differ from the CLI: 40×40, density 0.75, permeability 0.40, Fronterization B share 0.30, seed 42, play interval 200 ms. Leave the CLI defaults alone when changing the dashboard.
-- `requirements.txt` — `mesa[viz]==3.5.1` and NetworkX. Mesa imports NetworkX at startup. The viz extra supplies Solara and Matplotlib. Mesa 3.5 requires Python >=3.12. `.python-version` pins 3.12 for Render.
-- `render.yaml` — Render web service for the public dashboard. Start command is `solara run app.py --production --host 0.0.0.0 --port $PORT --workers 1`.
+- `requirements.txt` — `mesa[viz]==3.5.1` and NetworkX. Mesa imports NetworkX at startup. The viz extra supplies Solara and Matplotlib. Mesa 3.5 requires Python >=3.12.
+- `setup.sh` — creates `.venv` when missing, installs `requirements.txt` when packages are missing or outdated, and runs `solara run app.py`. The manual quick start in `README.md` stays.
 
 `SchellingModel.step()` zeroes the move count, calls `agents.shuffle_do("activate")`, and records the step. A second `StatusEntry` must be possible without rewriting that method. Receptivity already walks `statuses`.
 
@@ -58,7 +58,7 @@ source .venv/bin/activate
 - Make parameters easy to change.
 - Prefer clarity over premature optimization.
 - The dashboard draws with Matplotlib through `SpaceRenderer`. `StatusSpaceRenderer` calls `setup_structure` and `setup_agents`. Controls live in `solara.Sidebar`. The main pane is `solara.Columns([13, 7])`: the grid, then the stats and chart. Do not move those components into `SolaraViz`: its `GridDraggable` never mounts on this Solara build, because vue-grid-layout calls `window.Vue.use` and that function is absent. The stats panel is one HTML widget updated in place. `solara.Markdown` builds a new widget every step, the text vanishes for a frame, and the chart jumps.
-- Play is Mesa's `ModelController` in the sidebar. The public showcase is the Render web service in `render.yaml`. The Svelte site only links to that URL. Python stays off that site.
+- Play is Mesa's `ModelController` in the sidebar. The dashboard is local. The Svelte site links to this repository and does not embed the model. Do not add a hosted Solara target.
 
 ## Workflow
 
@@ -74,6 +74,6 @@ source .venv/bin/activate
 - YAML config and parameter sweeps.
 - Full Conciliatorics machinery beyond Operational Status.
 - Political or real-world case data.
-- Another deployment target besides the Render web service in `render.yaml`.
+- A public hosted dashboard (PyCafe, Render, Hugging Face, or another Solara host).
 
 When in doubt, stay inside the spec and keep the Operational Status mapping visible in the code.

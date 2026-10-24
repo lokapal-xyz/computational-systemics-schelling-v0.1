@@ -6,7 +6,16 @@ The coding reference is `docs/schelling-operational-status-spec.md`.
 
 ## Quick start
 
-From the repository root:
+From the repository root, one command creates `.venv` if needed, installs dependencies when they are missing or outdated, and starts the dashboard:
+
+```bash
+chmod +x setup.sh   # only needed once
+./setup.sh
+```
+
+Open the local URL the script prints. Stop the dashboard with Ctrl+C. `./setup.sh` runs in its own shell, so a later terminal activates the environment with `source .venv/bin/activate`.
+
+The same steps by hand:
 
 ```bash
 python3 -m venv .venv
@@ -15,7 +24,7 @@ pip install -r requirements.txt
 solara run app.py
 ```
 
-`requirements.txt` installs Mesa 3.5.1 with its visualization extra (Solara and Matplotlib) and NetworkX, which Mesa imports at startup. Mesa 3.5 needs Python 3.12. Open the URL printed in the terminal. The page is the live grid, the segregation chart, and the parameter controls.
+`requirements.txt` installs Mesa 3.5.1 with its visualization extra (Solara and Matplotlib) and NetworkX, which Mesa imports at startup. Mesa 3.5 needs Python 3.12. The page is the live grid, the segregation chart, and the parameter controls.
 
 For a printed step log in the terminal, use `python run.py`. See [Run](#run) for the flags and the columns.
 
@@ -28,8 +37,7 @@ For a printed step log in the terminal, use `python run.py`. See [Run](#run) for
   - `agent.py` — `SchellingAgent` (Receptivity and Proceptivity).
   - `model.py` — `SchellingModel` (grid, step, segregation index).
 - `requirements.txt` — pinned Mesa visualization install and NetworkX.
-- `render.yaml` — Render web service for the public dashboard.
-- `.python-version` — Python 3.12 for that service.
+- `setup.sh` — create `.venv`, install if needed, and start the dashboard.
 - `docs/` — design documents.
   - `schelling-operational-status-spec.md` — v0.1 coding reference.
   - `visualization-spec.md` — dashboard contract.
@@ -68,19 +76,7 @@ solara run app.py
 
 The page is a live grid plus the segregation chart. Cyan is Fronterization A, amber is Fronterization B, and a white edge means Receptivity is firing. Permeability, density, grid size, the share of Fronterization B, and the seed are sliders. Play, pause, step, and reset are Mesa's controls in the sidebar. Dashboard defaults are a 40×40 grid, density 0.75, permeability 0.40, Fronterization B share 0.30, and seed 42.
 
-## Render
-
-The showcase link for the Svelte site is the Render URL. Python stays off that site.
-
-`render.yaml` is a Render Blueprint for one Python web service:
-
-- Build: `pip install -r requirements.txt`
-- Start: `solara run app.py --production --host 0.0.0.0 --port $PORT --workers 1`
-- Python 3.12, from `.python-version`
-
-Push this repository to GitHub or GitLab, then in the Render dashboard choose **New Blueprint Instance** and select the repo. Render assigns an `onrender.com` URL. That URL is the dashboard link.
-
-The Blueprint uses the free instance. It sleeps after a stretch with no visitors, and the next visit waits while it wakes. A paid plan in `render.yaml` keeps it awake. One worker keeps each browser session on the same process.
+The dashboard runs on your machine. The Computational Systemics page on the website links to this repository. Casual viewers see the model in a stream or a short recording.
 
 ## Run
 
