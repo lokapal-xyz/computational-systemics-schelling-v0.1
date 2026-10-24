@@ -4,6 +4,8 @@ A Mesa implementation of Schelling segregation whose tolerance and movement rule
 
 The coding reference is `docs/schelling-operational-status-spec.md`.
 
+![Solara Start](./docs/solara-start.png)
+
 ## Quick start
 
 From the repository root, one command creates `.venv` if needed, installs dependencies when they are missing or outdated, and starts the dashboard:
@@ -122,3 +124,5 @@ Anything beyond that run is listed under [Deferred](#deferred).
 ## Deferred
 
 Dynamic fronterization updates, relevance weights, Hypo/Hyper and Sub/Supra gradations, interaction beyond the independent per-entry check, YAML config, and parameter sweeps.
+
+![Solara End](./docs/solara-end.png)
